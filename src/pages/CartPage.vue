@@ -62,15 +62,20 @@ function updateQuantity(item) {
   } else {
     store.updateQuantity(item.id, item.quantity);
   }
+  calculateTotal();
 }
 
 function removeItem(item) {
   store.removeFromCart(item.id);
   cartItems.value = cartItems.value.filter((product) => product.id !== item.id);
+  calculateTotal();
 }
 
 function calculateTotal() {
-  return this.cartItems.reduce((total, product) => total + product.price, 0);
+    return cartItems.value.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
+    );
 }
 
 function calculateNumberOfItems() {
@@ -95,6 +100,7 @@ onMounted(async () => {
       cartItems.value.find((product) => product.id === data.id).quantity += 1;
     }
   }
+  calculateTotal();
 });
 
 //Uncaught (in promise) SyntaxError: Unexpected end of JSON input
