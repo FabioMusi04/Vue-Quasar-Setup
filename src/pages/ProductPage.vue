@@ -1,5 +1,5 @@
 <template>
-    <div v-show="productInfo.id" class="product-page">
+    <div v-show="productInfo.id" class="q-pa-xs col-xs-12 col-sm-6 col-md-4 items-center flex justify-center">
         <q-card class="product-card">
             <q-card-section>
                 <q-img
@@ -30,9 +30,9 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "src/stores/cart";
 
-const props = defineProps({
+/* const props = defineProps({
     product: Object,
-});
+}); */
 
 const router = useRouter();
 const store = useCartStore();
@@ -57,47 +57,38 @@ function addToCart(productId) {
 </script>
 
 <style scoped>
-.product-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
 .product-card {
-    width: 400px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px; /* Limit the maximum width */
+  height: 100%; /* Ensure the card fills its container */
+  display: flex;
+  flex-direction: column;
 }
 
 .product-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
+  width: 100%; /* Ensure the image fills its container */
+  height: 200px; /* Set a fixed height for the image */
+  object-fit: cover; /* Ensure the image covers its container */
+}
+
+.product-details {
+  flex-grow: 1; /* Allow the details section to grow to fill the remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space between title, description, and actions */
 }
 
 .product-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .product-description {
-    margin-bottom: 10px;
-}
-
-.product-price {
-    margin-bottom: 10px;
-}
-
-.product-price-label {
-    font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px; /* Add some space between title and description */
 }
 
 .product-actions {
-    display: flex;
-    justify-content: flex-end;
+  margin-top: 10px; /* Add some space between description and actions */
 }
 </style>

@@ -8,6 +8,8 @@
       <div class="product-description">{{ product.description }}</div>
       <div class="product-actions">
         <q-btn flat label="Add to Cart" @click="addToCart(product.id)" />
+        <q-icon name="favorite" :class='isFav(product.id) ? "text-red" : "text-black"'
+        @click="handleFav(product.id)" />
       </div>
     </q-card-section>
   </q-card>
@@ -16,6 +18,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useCartStore } from "src/stores/cart";
+import { useFavStore } from "src/stores/favourites";
 
 const props = defineProps({
   product: Object,
@@ -23,15 +26,24 @@ const props = defineProps({
 
 const router = useRouter()
 const store = useCartStore()
+const favStore = useFavStore()
 
 function addToCart(productId) {
     store.addToCart(productId)
-    //router.push({ name: "cart" })
 }
 
 function details(id) {
     console.log("Details", id);
     router.push({ name: "product", params: { id: id } });
+}
+
+function isFav(id) {
+    return favStore.isFavourite(id)
+}
+
+function handleFav(id) {
+    console.log("Fav", id);
+    favStore.toggleFavourite(id)
 }
 </script>
 

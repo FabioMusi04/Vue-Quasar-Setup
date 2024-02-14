@@ -68,6 +68,12 @@ const linksList = [
     icon: 'shopping_cart',
     link: '/cart'
   },
+  {
+    title: 'Favourites',
+    caption: 'your favourite products',
+    icon: 'favorite',
+    link: '/favourites'
+  }
 ]
 
 export default defineComponent({
