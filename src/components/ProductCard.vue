@@ -19,6 +19,7 @@
 import { useRouter } from "vue-router";
 import { useCartStore } from "src/stores/cart";
 import { useFavStore } from "src/stores/favourites";
+import { useLoginStore } from "src/stores/login";
 
 const props = defineProps({
   product: Object,
@@ -27,21 +28,35 @@ const props = defineProps({
 const router = useRouter()
 const store = useCartStore()
 const favStore = useFavStore()
+const loginStore = useLoginStore()
 
 function addToCart(productId) {
+    if (!loginStore.isLoggedIn) {
+        router.push({ name: "login" });
+        return
+    }
     store.addToCart(productId)
 }
 
 function details(id) {
+  if (!loginStore.isLoggedIn) {
+    router.push({ name: "login" });
+    return
+  }
     console.log("Details", id);
     router.push({ name: "product", params: { id: id } });
 }
 
 function isFav(id) {
+    if(!loginStore.isLoggedIn) return false
     return favStore.isFavourite(id)
 }
 
 function handleFav(id) {
+    if(!loginStore.isLoggedIn) {
+        router.push({ name: "login" });
+        return
+    }
     console.log("Fav", id);
     favStore.toggleFavourite(id)
 }
